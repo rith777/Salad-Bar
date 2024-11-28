@@ -13,22 +13,100 @@
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Declaration>
+        <Class IRI="#Bacon"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Balsamicglaze"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Basil"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BukgurWheat"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CaesarDressing"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Caeser_Salad"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Caprese_Salad"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Chicken"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ChipotleRanch"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Cobb_Salad"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Crunches"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Cucumber"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Dairy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Dressing"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Egg"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#FetaCheese"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Fish"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Greek_Salad"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Herbs"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ingredients"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Lettuce"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#LimeVinegar"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mint"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mozzarella"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Non_Vegetarian"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#OliveOil"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Onion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ParmesanCheese"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Parsley"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Pescitarian"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Protein"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#RedWineVinegar"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Salad"/>
@@ -49,11 +127,49 @@
         <Class IRI="#Tabbouleh_Salad"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Tomato"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#TortillaStrips"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Vegan"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Vegetable"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Vegetarian"/>
     </Declaration>
+    <Declaration>
+        <Class IRI="#others"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasIngredients"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasTopping"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Bacon"/>
+        <Class IRI="#Protein"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Balsamicglaze"/>
+        <Class IRI="#Dressing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Basil"/>
+        <Class IRI="#Herbs"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BukgurWheat"/>
+        <Class IRI="#Crunches"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CaesarDressing"/>
+        <Class IRI="#Dressing"/>
+    </SubClassOf>
     <SubClassOf>
         <Class IRI="#Caeser_Salad"/>
         <Class IRI="#Salad_Name"/>
@@ -63,20 +179,104 @@
         <Class IRI="#Salad_Name"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Chicken"/>
+        <Class IRI="#Protein"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ChipotleRanch"/>
+        <Class IRI="#Dressing"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Cobb_Salad"/>
         <Class IRI="#Salad_Name"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Crunches"/>
+        <Class IRI="#Ingredients"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cucumber"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Dairy"/>
+        <Class IRI="#Ingredients"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Dressing"/>
+        <Class IRI="#Salad"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Egg"/>
+        <Class IRI="#Protein"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#FetaCheese"/>
+        <Class IRI="#Dairy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Fish"/>
+        <Class IRI="#Protein"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Greek_Salad"/>
         <Class IRI="#Salad_Name"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Herbs"/>
+        <Class IRI="#Ingredients"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ingredients"/>
+        <Class IRI="#Salad"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Lettuce"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#LimeVinegar"/>
+        <Class IRI="#Dressing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mint"/>
+        <Class IRI="#Herbs"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mozzarella"/>
+        <Class IRI="#Dairy"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Non_Vegetarian"/>
         <Class IRI="#Salad_Type"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#OliveOil"/>
+        <Class IRI="#others"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Onion"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ParmesanCheese"/>
+        <Class IRI="#Dairy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Parsley"/>
+        <Class IRI="#Herbs"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Pescitarian"/>
         <Class IRI="#Salad_Type"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Protein"/>
+        <Class IRI="#Ingredients"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#RedWineVinegar"/>
+        <Class IRI="#Dressing"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Salad"/>
@@ -99,13 +299,107 @@
         <Class IRI="#Salad_Name"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Tomato"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#TortillaStrips"/>
+        <Class IRI="#Crunches"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Vegan"/>
         <Class IRI="#Salad_Type"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Vegetable"/>
+        <Class IRI="#Ingredients"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Vegetarian"/>
         <Class IRI="#Salad_Type"/>
     </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#others"/>
+        <Class IRI="#Ingredients"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Balsamicglaze"/>
+        <Class IRI="#CaesarDressing"/>
+        <Class IRI="#ChipotleRanch"/>
+        <Class IRI="#LimeVinegar"/>
+        <Class IRI="#RedWineVinegar"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Caeser_Salad"/>
+        <Class IRI="#Caprese_Salad"/>
+        <Class IRI="#Cobb_Salad"/>
+        <Class IRI="#Greek_Salad"/>
+        <Class IRI="#Salad_Name"/>
+        <Class IRI="#Southwest_Salad"/>
+        <Class IRI="#Tabbouleh_Salad"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Crunches"/>
+        <Class IRI="#Dairy"/>
+        <Class IRI="#Herbs"/>
+        <Class IRI="#Protein"/>
+        <Class IRI="#Vegetable"/>
+        <Class IRI="#others"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Dressing"/>
+        <Class IRI="#Ingredients"/>
+        <Class IRI="#Salad"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Dressing"/>
+        <Class IRI="#Ingredients"/>
+        <Class IRI="#Salad_Name"/>
+        <Class IRI="#Salad_Type"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Non_Vegetarian"/>
+        <Class IRI="#Pescitarian"/>
+        <Class IRI="#Salad_Type"/>
+        <Class IRI="#Vegan"/>
+        <Class IRI="#Vegetarian"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Salad"/>
+        <Class IRI="#Salad_Bar"/>
+    </DisjointClasses>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#hasTopping"/>
+        <ObjectProperty IRI="#hasIngredients"/>
+    </SubObjectPropertyOf>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasIngredients"/>
+        <Class IRI="#Salad"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasTopping"/>
+        <Class IRI="#Ingredients"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasIngredients"/>
+        <Class IRI="#Ingredients"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasTopping"/>
+        <Class IRI="#Crunches"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasTopping"/>
+        <Class IRI="#Dairy"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasTopping"/>
+        <Class IRI="#Herbs"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasTopping"/>
+        <Class IRI="#Protein"/>
+    </ObjectPropertyRange>
 </Ontology>
 
 
