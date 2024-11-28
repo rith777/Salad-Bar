@@ -13,6 +13,9 @@
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Declaration>
+        <Class IRI="#Avocado"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Bacon"/>
     </Declaration>
     <Declaration>
@@ -22,7 +25,10 @@
         <Class IRI="#Basil"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#BukgurWheat"/>
+        <Class IRI="#BlueCheese"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BulgurWheat"/>
     </Declaration>
     <Declaration>
         <Class IRI="#CaesarDressing"/>
@@ -41,6 +47,12 @@
     </Declaration>
     <Declaration>
         <Class IRI="#Cobb_Salad"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Corn"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Croutons"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Crunches"/>
@@ -94,6 +106,9 @@
         <Class IRI="#Onion"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Oregano"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#ParmesanCheese"/>
     </Declaration>
     <Declaration>
@@ -121,7 +136,16 @@
         <Class IRI="#Salad_Type"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Salmon"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Shrimp"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Southwest_Salad"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Spinach"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Tabbouleh_Salad"/>
@@ -130,7 +154,7 @@
         <Class IRI="#Tomato"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#TortillaStrips"/>
+        <Class IRI="#TortillaChips"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Vegan"/>
@@ -142,7 +166,7 @@
         <Class IRI="#Vegetarian"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#others"/>
+        <ObjectProperty IRI="#hasDressing"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#hasIngredients"/>
@@ -150,6 +174,29 @@
     <Declaration>
         <ObjectProperty IRI="#hasTopping"/>
     </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isDressingOff"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isIngredientOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isToppingOf"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#Non_Vegetarian"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Salad"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasTopping"/>
+                <Class IRI="#Protein"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#Avocado"/>
+        <Class IRI="#Protein"/>
+    </SubClassOf>
     <SubClassOf>
         <Class IRI="#Bacon"/>
         <Class IRI="#Protein"/>
@@ -163,7 +210,11 @@
         <Class IRI="#Herbs"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#BukgurWheat"/>
+        <Class IRI="#BlueCheese"/>
+        <Class IRI="#Dairy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#BulgurWheat"/>
         <Class IRI="#Crunches"/>
     </SubClassOf>
     <SubClassOf>
@@ -175,8 +226,75 @@
         <Class IRI="#Salad_Name"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Caeser_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasDressing"/>
+            <Class IRI="#CaesarDressing"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caeser_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Croutons"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caeser_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Lettuce"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caeser_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#ParmesanCheese"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caeser_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <ObjectUnionOf>
+                <Class IRI="#Chicken"/>
+                <Class IRI="#Salmon"/>
+                <Class IRI="#Shrimp"/>
+            </ObjectUnionOf>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Caprese_Salad"/>
         <Class IRI="#Salad_Name"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caprese_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasDressing"/>
+            <Class IRI="#Balsamicglaze"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caprese_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Basil"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caprese_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Mozzarella"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Caprese_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Tomato"/>
+        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Chicken"/>
@@ -189,6 +307,87 @@
     <SubClassOf>
         <Class IRI="#Cobb_Salad"/>
         <Class IRI="#Salad_Name"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasDressing"/>
+            <ObjectUnionOf>
+                <Class IRI="#ChipotleRanch"/>
+                <Class IRI="#RedWineVinegar"/>
+            </ObjectUnionOf>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Avocado"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Cucumber"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Lettuce"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Onion"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Spinach"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Tomato"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <ObjectIntersectionOf>
+                <Class IRI="#Bacon"/>
+                <Class IRI="#Chicken"/>
+                <Class IRI="#Egg"/>
+            </ObjectIntersectionOf>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobb_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <ObjectUnionOf>
+                <Class IRI="#BlueCheese"/>
+                <Class IRI="#FetaCheese"/>
+            </ObjectUnionOf>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Corn"/>
+        <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Croutons"/>
+        <Class IRI="#Crunches"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Crunches"/>
@@ -223,6 +422,51 @@
         <Class IRI="#Salad_Name"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Greek_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasDressing"/>
+            <ObjectIntersectionOf>
+                <Class IRI="#OliveOil"/>
+                <Class IRI="#RedWineVinegar"/>
+            </ObjectIntersectionOf>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Greek_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Cucumber"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Greek_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#FetaCheese"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Greek_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Onion"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Greek_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Oregano"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Greek_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Tomato"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Herbs"/>
         <Class IRI="#Ingredients"/>
     </SubClassOf>
@@ -252,11 +496,15 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#OliveOil"/>
-        <Class IRI="#others"/>
+        <Class IRI="#Dressing"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Onion"/>
         <Class IRI="#Vegetable"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Oregano"/>
+        <Class IRI="#Herbs"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#ParmesanCheese"/>
@@ -284,26 +532,153 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Salad_Name"/>
-        <Class IRI="#Salad"/>
+        <Class IRI="#Salad_Type"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Salad_Type"/>
         <Class IRI="#Salad"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Salmon"/>
+        <Class IRI="#Protein"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Shrimp"/>
+        <Class IRI="#Protein"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Southwest_Salad"/>
         <Class IRI="#Salad_Name"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Southwest_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasDressing"/>
+            <Class IRI="#ChipotleRanch"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Southwest_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Avocado"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Southwest_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Corn"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Southwest_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Lettuce"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Southwest_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Onion"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Southwest_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Tomato"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Southwest_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#TortillaChips"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Spinach"/>
+        <Class IRI="#Herbs"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Spinach"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasDressing"/>
+            <Class IRI="#RedWineVinegar"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Spinach"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Spinach"/>
+        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Tabbouleh_Salad"/>
         <Class IRI="#Salad_Name"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Tabbouleh_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasDressing"/>
+            <ObjectIntersectionOf>
+                <Class IRI="#LimeVinegar"/>
+                <Class IRI="#OliveOil"/>
+            </ObjectIntersectionOf>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tabbouleh_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#BulgurWheat"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tabbouleh_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Cucumber"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tabbouleh_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Mint"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tabbouleh_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Onion"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tabbouleh_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Parsley"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Tabbouleh_Salad"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasTopping"/>
+            <Class IRI="#Tomato"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Tomato"/>
         <Class IRI="#Vegetable"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#TortillaStrips"/>
+        <Class IRI="#TortillaChips"/>
         <Class IRI="#Crunches"/>
     </SubClassOf>
     <SubClassOf>
@@ -317,10 +692,6 @@
     <SubClassOf>
         <Class IRI="#Vegetarian"/>
         <Class IRI="#Salad_Type"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#others"/>
-        <Class IRI="#Ingredients"/>
     </SubClassOf>
     <DisjointClasses>
         <Class IRI="#Balsamicglaze"/>
@@ -337,14 +708,6 @@
         <Class IRI="#Salad_Name"/>
         <Class IRI="#Southwest_Salad"/>
         <Class IRI="#Tabbouleh_Salad"/>
-    </DisjointClasses>
-    <DisjointClasses>
-        <Class IRI="#Crunches"/>
-        <Class IRI="#Dairy"/>
-        <Class IRI="#Herbs"/>
-        <Class IRI="#Protein"/>
-        <Class IRI="#Vegetable"/>
-        <Class IRI="#others"/>
     </DisjointClasses>
     <DisjointClasses>
         <Class IRI="#Dressing"/>
@@ -369,8 +732,24 @@
         <Class IRI="#Salad_Bar"/>
     </DisjointClasses>
     <SubObjectPropertyOf>
+        <ObjectProperty IRI="#hasDressing"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
         <ObjectProperty IRI="#hasTopping"/>
         <ObjectProperty IRI="#hasIngredients"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#isDressingOff"/>
+        <ObjectProperty IRI="#hasDressing"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#isIngredientOf"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#isToppingOf"/>
+        <ObjectProperty IRI="#isIngredientOf"/>
     </SubObjectPropertyOf>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#hasIngredients"/>
@@ -399,6 +778,10 @@
     <ObjectPropertyRange>
         <ObjectProperty IRI="#hasTopping"/>
         <Class IRI="#Protein"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasTopping"/>
+        <Class IRI="#Vegetable"/>
     </ObjectPropertyRange>
 </Ontology>
 
