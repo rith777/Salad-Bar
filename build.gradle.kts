@@ -10,7 +10,11 @@ repositories {
 }
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "localDependencies", "include" to listOf("*.jar"))))
+
     testImplementation(kotlin("test"))
+    testImplementation("org.assertj:assertj-core:3.26.3")
+
 }
 
 tasks.test {
