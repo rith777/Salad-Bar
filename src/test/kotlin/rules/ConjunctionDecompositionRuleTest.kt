@@ -47,7 +47,7 @@ class ConjunctionDecompositionRuleTest {
     }
 
     @Test
-    fun `when all concepts are conjuctions, all related conjunctions are added to the interpretation`() {
+    fun `when all concepts are conjunctions, all related conjunctions are added to the interpretation`() {
         val interpretation = setOf<Concept>(
             ConceptConjunction(createConjunctions(1)),
             ConceptConjunction(createConjunctions(3)),

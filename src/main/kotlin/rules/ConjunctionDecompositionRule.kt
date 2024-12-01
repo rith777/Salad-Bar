@@ -5,7 +5,6 @@ import nl.vu.kai.dl4python.datatypes.ConceptConjunction
 
 /**
  * Equivalent to ⊓-rule 1:  If d has C ⊓ D assigned, assign also C and D to d
- *
  */
 class ConjunctionDecompositionRule : InferenceRule {
 
@@ -23,7 +22,7 @@ class ConjunctionDecompositionRule : InferenceRule {
             .flatMap { it.conjuncts }
 
         return if (conjuncts.isNotEmpty()) {
-            return Result(RuleStatus.APPLIED, interpretation + conjuncts)
+            Result(RuleStatus.APPLIED, (interpretation + conjuncts))
         } else Result(RuleStatus.NOT_APPLIED, interpretation)
     }
 }
