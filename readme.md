@@ -9,9 +9,9 @@ Bellow are the inference rules used for the EL-complete algorith:
 | ⊤-Rule	   | class TopClassAssignmentInferenceRule |
 | ⊓-Rule 1	 | class ConjunctionDecompositionRule    |
 | ⊓-Rule 2	 | ConjunctionCompositionRule            |
-| ∃-Rule 1	 | WIP                                   |
-| ∃-Rule 2	 | WIP                                   |
-| ⊑-Rule	   | WIP                                   |
+| ∃-Rule 1	 | ExistentialExpansionRule              |
+| ∃-Rule 2	 | ExistentialIntroductionRule           |
+| ⊑-Rule	   | SubsumptionPropagationRule            |
 
 ## Dependencies
 

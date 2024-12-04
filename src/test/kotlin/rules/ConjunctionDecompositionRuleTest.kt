@@ -5,6 +5,7 @@ import nl.vu.kai.dl4python.datatypes.ConceptConjunction
 import nl.vu.kai.dl4python.datatypes.ConceptName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.kr.assignment.rules.ConceptWrapper
 import org.kr.assignment.rules.ConjunctionDecompositionRule
 import org.kr.assignment.rules.RuleStatus
 import scala.collection.JavaConverters
@@ -16,15 +17,16 @@ class ConjunctionDecompositionRuleTest {
 
     @Test
     fun `there are no changes in the interpretation when there are no conjunctions`() {
-        val interpretation = mutableSetOf<Concept>(
+        val concepts = mutableSetOf<Concept>(
             ConceptName("concept1"),
             ConceptName("concept2"),
         )
 
-        val result = rule.applyTo(interpretation)
+        val conceptWrapper = ConceptWrapper(concepts, emptySet())
+        val result = rule.applyTo(conceptWrapper)
 
         assertThat(result.status).isEqualTo(RuleStatus.NOT_APPLIED)
-        assertThat(interpretation).hasSize(2)
+        assertThat(concepts).hasSize(2)
     }
 
     @Test
@@ -32,29 +34,32 @@ class ConjunctionDecompositionRuleTest {
         val conjunctions = createConjunctions(2)
         val conceptConjunction = ConceptConjunction(conjunctions)
 
-        val interpretation = setOf<Concept>(
+        val concepts = setOf<Concept>(
             ConceptName("concept1"),
             ConceptName("concept2"),
             conceptConjunction
         )
 
-        val result = rule.applyTo(interpretation)
+        val conceptWrapper = ConceptWrapper(concepts, emptySet())
+        val result = rule.applyTo(conceptWrapper)
 
         assertThat(result.status).isEqualTo(RuleStatus.APPLIED)
-        assertThat(result.interpretation).hasSize(interpretation.size + conjunctions.size())
+        assertThat(result.interpretation).hasSize(concepts.size + conjunctions.size())
         assertThat(result.interpretation).containsAnyOf(*conceptConjunction.conjuncts.toTypedArray())
-        assertThat(result.interpretation).containsAnyOf(*interpretation.toTypedArray())
+        assertThat(result.interpretation).containsAnyOf(*concepts.toTypedArray())
     }
 
     @Test
     fun `when all concepts are conjunctions, all related conjunctions are added to the interpretation`() {
-        val interpretation = setOf<Concept>(
+        val concepts = setOf<Concept>(
             ConceptConjunction(createConjunctions(1)),
             ConceptConjunction(createConjunctions(3)),
             ConceptConjunction(createConjunctions(5))
         )
 
-        val result = rule.applyTo(interpretation)
+        val conceptWrapper = ConceptWrapper(concepts, emptySet())
+
+        val result = rule.applyTo(conceptWrapper)
 
         assertThat(result.status).isEqualTo(RuleStatus.APPLIED)
         assertThat(result.interpretation).hasSize(12)

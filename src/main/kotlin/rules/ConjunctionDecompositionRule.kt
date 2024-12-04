@@ -9,20 +9,22 @@ import nl.vu.kai.dl4python.datatypes.ConceptConjunction
 class ConjunctionDecompositionRule : InferenceRule {
 
     /**
-     * Includes all conjunctions related each [Concept] included in the [interpretation] to the [interpretation] itself.
-     * The rule is applied when at least one of the concepts included in the [interpretation]
+     * Includes all conjunctions related each [Concept] included in the [conceptWrapper] to the [conceptWrapper] itself.
+     * The rule is applied when at least one of the concepts included in the [conceptWrapper]
      * has type [ConceptConjunction]
      *
-     * @param interpretation
-     * @return result with the updated interpretation if rule was applied. The original interpretation is returned if
-     * the rule is not applied.
+     * @param conceptWrapper
+     * @return [Result] with status set as[RuleStatus.APPLIED] if top concept was added to interpretation. Otherwise,
+     *         the status is set to RuleStatus.NOT_APPLIED. The set of concepts is updated with the new valid
+     *         conjunctions. A conjunction is considered valid when it exists within the set of
+     *         [allConceptsWithinOntology]
      */
-    override fun applyTo(interpretation: Set<Concept>): Result {
-        val conjuncts: List<Concept> = interpretation.filterIsInstance<ConceptConjunction>()
+    override fun applyTo(conceptWrapper: ConceptWrapper): Result {
+        val conjuncts: List<Concept> = conceptWrapper.concepts.filterIsInstance<ConceptConjunction>()
             .flatMap { it.conjuncts }
 
         return if (conjuncts.isNotEmpty()) {
-            Result(RuleStatus.APPLIED, (interpretation + conjuncts))
-        } else Result(RuleStatus.NOT_APPLIED, interpretation)
+            Result(RuleStatus.APPLIED, (conceptWrapper.concepts + conjuncts))
+        } else Result(RuleStatus.NOT_APPLIED, conceptWrapper.concepts)
     }
 }

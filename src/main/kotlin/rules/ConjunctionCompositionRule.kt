@@ -8,18 +8,20 @@ import nl.vu.kai.dl4python.datatypes.Concept
 class ConjunctionCompositionRule(private val allConceptsWithinOntology: Set<Concept>) : InferenceRule {
 
     /**
-     * Converts unique pairs of [Concept] within [interpretation] into conjunctions and add them to interpretation
+     * Converts unique pairs of [Concept] within [conceptWrapper] into conjunctions and add them to interpretation
      * in case they are included in [allConceptsWithinOntology].
      *
      *  Nodes set as owl:intersectionOf are considered existing conjunctions in [allConceptsWithinOntology]
      *
-     *  @param interpretation
-     *  @return result with the updated interpretation if rule was applied. The original interpretation is returned if
-     * the rule is not applied.
+     *  @param conceptWrapper
+     *  @return [Result] with status set as[RuleStatus.APPLIED] if top concept was added to interpretation. Otherwise,
+     *         the status is set to RuleStatus.NOT_APPLIED. The set of concepts is updated with the new valid
+     *         conjunctions. A conjunction is considered valid when it exists within the set of
+     *         [allConceptsWithinOntology]
      */
-    override fun applyTo(interpretation: Set<Concept>): Result {
-        val conceptPairs = interpretation.map { item ->
-            interpretation.mapNotNull { if (it == item) null else item to it }
+    override fun applyTo(conceptWrapper: ConceptWrapper): Result {
+        val conceptPairs = conceptWrapper.concepts.map { item ->
+            conceptWrapper.concepts.mapNotNull { if (it == item) null else item to it }
         }.flatten()
 
         val newConcepts = conceptPairs.mapNotNull { (first, second) ->
@@ -29,9 +31,9 @@ class ConjunctionCompositionRule(private val allConceptsWithinOntology: Set<Conc
         }
 
         return if (newConcepts.isEmpty()) {
-            Result(RuleStatus.NOT_APPLIED, interpretation)
+            Result(RuleStatus.NOT_APPLIED, conceptWrapper.concepts)
         } else {
-            Result(RuleStatus.APPLIED, (interpretation + newConcepts))
+            Result(RuleStatus.APPLIED, (conceptWrapper.concepts + newConcepts))
         }
     }
 }
