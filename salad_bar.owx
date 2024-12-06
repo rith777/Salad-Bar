@@ -185,10 +185,7 @@
         <ObjectIntersectionOf>
             <Class IRI="#Salad"/>
             <ObjectComplementOf>
-                <ObjectUnionOf>
-                    <Class IRI="#Pescitarian"/>
-                    <Class IRI="#Vegan"/>
-                </ObjectUnionOf>
+                <Class IRI="#Vegan"/>
             </ObjectComplementOf>
         </ObjectIntersectionOf>
     </EquivalentClasses>
@@ -196,6 +193,15 @@
         <Class IRI="#Pescitarian"/>
         <ObjectIntersectionOf>
             <Class IRI="#Salad"/>
+            <ObjectComplementOf>
+                <ObjectUnionOf>
+                    <Class IRI="#Bacon"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasTopping"/>
+                        <Class IRI="#Chicken"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectUnionOf>
+            </ObjectComplementOf>
             <ObjectSomeValuesFrom>
                 <ObjectProperty IRI="#hasTopping"/>
                 <Class IRI="#Fish"/>
