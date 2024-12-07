@@ -37,9 +37,6 @@
         <Class IRI="#Caeser_Salad"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#CalorieValue"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="#Caprese_Salad"/>
     </Declaration>
     <Declaration>
@@ -79,16 +76,22 @@
         <Class IRI="#Fish"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Gluten"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#GlutenFreeSalads"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#GlutenSalads"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#GlutenValue"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Greek_Salad"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Herbs"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#High"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#HighCalorieSalad"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Ingredients"/>
@@ -100,22 +103,13 @@
         <Class IRI="#LimeVinegar"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Low"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#LowCalorieSalad"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Medium"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="#Mint"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#MixedCalorieSalad"/>
+        <Class IRI="#Mozzarella"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Mozzarella"/>
+        <Class IRI="#NoGluten"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Non_Vegetarian"/>
@@ -193,10 +187,10 @@
         <Class IRI="#Vegetarian"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#hasCalorie"/>
+        <ObjectProperty IRI="#hasDressing"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#hasDressing"/>
+        <ObjectProperty IRI="#hasGluten"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#hasIngredients"/>
@@ -213,11 +207,8 @@
     <Declaration>
         <ObjectProperty IRI="#isToppingOf"/>
     </Declaration>
-    <Declaration>
-        <DataProperty IRI="#isGlutinFree"/>
-    </Declaration>
     <EquivalentClasses>
-        <Class IRI="#HighCalorieSalad"/>
+        <Class IRI="#GlutenFreeSalads"/>
         <ObjectIntersectionOf>
             <Class IRI="#Salad"/>
             <ObjectSomeValuesFrom>
@@ -225,15 +216,15 @@
                 <ObjectIntersectionOf>
                     <Class IRI="#Ingredients"/>
                     <ObjectSomeValuesFrom>
-                        <ObjectProperty IRI="#hasCalorie"/>
-                        <Class IRI="#High"/>
+                        <ObjectProperty IRI="#hasGluten"/>
+                        <Class IRI="#NoGluten"/>
                     </ObjectSomeValuesFrom>
                 </ObjectIntersectionOf>
             </ObjectSomeValuesFrom>
         </ObjectIntersectionOf>
     </EquivalentClasses>
     <EquivalentClasses>
-        <Class IRI="#LowCalorieSalad"/>
+        <Class IRI="#GlutenSalads"/>
         <ObjectIntersectionOf>
             <Class IRI="#Salad"/>
             <ObjectSomeValuesFrom>
@@ -241,24 +232,8 @@
                 <ObjectIntersectionOf>
                     <Class IRI="#Ingredients"/>
                     <ObjectSomeValuesFrom>
-                        <ObjectProperty IRI="#hasCalorie"/>
-                        <Class IRI="#Low"/>
-                    </ObjectSomeValuesFrom>
-                </ObjectIntersectionOf>
-            </ObjectSomeValuesFrom>
-        </ObjectIntersectionOf>
-    </EquivalentClasses>
-    <EquivalentClasses>
-        <Class IRI="#MixedCalorieSalad"/>
-        <ObjectIntersectionOf>
-            <Class IRI="#Salad"/>
-            <ObjectSomeValuesFrom>
-                <ObjectProperty IRI="#hasTopping"/>
-                <ObjectIntersectionOf>
-                    <Class IRI="#Ingredients"/>
-                    <ObjectSomeValuesFrom>
-                        <ObjectProperty IRI="#hasCalorie"/>
-                        <Class IRI="#Low"/>
+                        <ObjectProperty IRI="#hasGluten"/>
+                        <Class IRI="#Gluten"/>
                     </ObjectSomeValuesFrom>
                 </ObjectIntersectionOf>
             </ObjectSomeValuesFrom>
@@ -292,9 +267,8 @@
     <EquivalentClasses>
         <Class IRI="#Nutrition"/>
         <ObjectUnionOf>
-            <Class IRI="#High"/>
-            <Class IRI="#Low"/>
-            <Class IRI="#Medium"/>
+            <Class IRI="#Gluten"/>
+            <Class IRI="#NoGluten"/>
         </ObjectUnionOf>
     </EquivalentClasses>
     <EquivalentClasses>
@@ -365,6 +339,13 @@
     <SubClassOf>
         <Class IRI="#CaesarDressing"/>
         <Class IRI="#Dressing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CaesarDressing"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasGluten"/>
+            <Class IRI="#Gluten"/>
+        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Caeser_Salad"/>
@@ -493,13 +474,6 @@
     <SubClassOf>
         <Class IRI="#Chicken"/>
         <Class IRI="#Poultry"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Chicken"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#hasCalorie"/>
-            <Class IRI="#High"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#ChipotleRanch"/>
@@ -632,6 +606,13 @@
         <Class IRI="#Protein"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Dairy"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasGluten"/>
+            <Class IRI="#Gluten"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Dressing"/>
         <Class IRI="#Ingredients"/>
     </SubClassOf>
@@ -646,6 +627,25 @@
     <SubClassOf>
         <Class IRI="#Fish"/>
         <Class IRI="#Protein"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Fish"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasGluten"/>
+            <Class IRI="#NoGluten"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Gluten"/>
+        <Class IRI="#Nutrition"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#GlutenFreeSalads"/>
+        <Class IRI="#Salad"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#GlutenSalads"/>
+        <Class IRI="#Salad"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Greek_Salad"/>
@@ -697,7 +697,10 @@
         <Class IRI="#Greek_Salad"/>
         <ObjectAllValuesFrom>
             <ObjectProperty IRI="#hasDressing"/>
-            <Class IRI="#OliveOil"/>
+            <ObjectUnionOf>
+                <Class IRI="#OliveOil"/>
+                <Class IRI="#RedWineVinegar"/>
+            </ObjectUnionOf>
         </ObjectAllValuesFrom>
     </SubClassOf>
     <SubClassOf>
@@ -718,14 +721,6 @@
         <Class IRI="#Ingredients"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#High"/>
-        <Class IRI="#Nutrition"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#HighCalorieSalad"/>
-        <Class IRI="#Salad"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Ingredients"/>
         <Class IRI="#Salad_Bar"/>
     </SubClassOf>
@@ -738,35 +733,16 @@
         <Class IRI="#Dressing"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#LimeVinegar"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#hasCalorie"/>
-            <Class IRI="#Low"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Low"/>
-        <Class IRI="#Nutrition"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#LowCalorieSalad"/>
-        <Class IRI="#Salad"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Medium"/>
-        <Class IRI="#Nutrition"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Mint"/>
         <Class IRI="#Herbs"/>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="#MixedCalorieSalad"/>
-        <Class IRI="#Salad"/>
-    </SubClassOf>
-    <SubClassOf>
         <Class IRI="#Mozzarella"/>
         <Class IRI="#Dairy"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#NoGluten"/>
+        <Class IRI="#Nutrition"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Non_Vegetarian"/>
@@ -774,7 +750,7 @@
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Nutrition"/>
-        <Class IRI="#CalorieValue"/>
+        <Class IRI="#GlutenValue"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#OliveOil"/>
@@ -805,6 +781,13 @@
         <Class IRI="#Protein"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Poultry"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasGluten"/>
+            <Class IRI="#NoGluten"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Protein"/>
         <Class IRI="#Ingredients"/>
     </SubClassOf>
@@ -823,13 +806,6 @@
     <SubClassOf>
         <Class IRI="#Salmon"/>
         <Class IRI="#Fish"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Salmon"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#hasCalorie"/>
-            <Class IRI="#High"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Shrimp"/>
@@ -1052,7 +1028,10 @@
         <Class IRI="#Tabbouleh_Salad"/>
         <ObjectAllValuesFrom>
             <ObjectProperty IRI="#hasDressing"/>
-            <Class IRI="#LimeVinegar"/>
+            <ObjectUnionOf>
+                <Class IRI="#LimeVinegar"/>
+                <Class IRI="#OliveOil"/>
+            </ObjectUnionOf>
         </ObjectAllValuesFrom>
     </SubClassOf>
     <SubClassOf>
@@ -1084,13 +1063,6 @@
     <SubClassOf>
         <Class IRI="#Vegetable"/>
         <Class IRI="#Ingredients"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Vegetable"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#hasCalorie"/>
-            <Class IRI="#Low"/>
-        </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Vegetarian"/>
@@ -1145,10 +1117,6 @@
         <Class IRI="#Tabbouleh_Salad"/>
     </DisjointClasses>
     <DisjointClasses>
-        <Class IRI="#CalorieValue"/>
-        <Class IRI="#Salad_Bar"/>
-    </DisjointClasses>
-    <DisjointClasses>
         <Class IRI="#Crunches"/>
         <Class IRI="#Dressing"/>
         <Class IRI="#Herbs"/>
@@ -1159,6 +1127,10 @@
         <Class IRI="#Dairy"/>
         <Class IRI="#Fish"/>
         <Class IRI="#Poultry"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#GlutenValue"/>
+        <Class IRI="#Salad_Bar"/>
     </DisjointClasses>
     <DisjointClasses>
         <Class IRI="#Non_Vegetarian"/>
@@ -1225,10 +1197,6 @@
         <ObjectProperty IRI="#isIngredientOf"/>
     </TransitiveObjectProperty>
     <ObjectPropertyDomain>
-        <ObjectProperty IRI="#hasCalorie"/>
-        <Class IRI="#Ingredients"/>
-    </ObjectPropertyDomain>
-    <ObjectPropertyDomain>
         <ObjectProperty IRI="#hasDressing"/>
         <Class IRI="#Salad"/>
     </ObjectPropertyDomain>
@@ -1240,15 +1208,15 @@
         <ObjectProperty IRI="#hasTopping"/>
         <Class IRI="#Salad"/>
     </ObjectPropertyDomain>
-    <ObjectPropertyRange>
-        <ObjectProperty IRI="#hasCalorie"/>
-        <Class IRI="#Nutrition"/>
-    </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#hasDressing"/>
         <Class IRI="#Dressing"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasGluten"/>
+        <Class IRI="#Nutrition"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
         <ObjectProperty IRI="#hasIngredients"/>
         <Class IRI="#Ingredients"/>
     </ObjectPropertyRange>
@@ -1256,10 +1224,6 @@
         <ObjectProperty IRI="#hasTopping"/>
         <Class IRI="#Ingredients"/>
     </ObjectPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="#isGlutinFree"/>
-        <Datatype abbreviatedIRI="xsd:boolean"/>
-    </DataPropertyRange>
 </Ontology>
 
 
