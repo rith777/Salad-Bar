@@ -1,24 +1,31 @@
 package org.kr.assignment.rules
 
 import nl.vu.kai.dl4python.datatypes.ExistentialRoleRestriction
-import nl.vu.kai.dl4python.datatypes.Role
+import nl.vu.kai.dl4python.datatypes.Ontology
+import java.util.*
 
 /**
  * Equivalent to ∃-rule 1: If d has ∃r .C assigned, and there is no r -successor with C assigned, add
  * a new r -successor to d and assign C to it.
  */
-class ExistentialExpansionRule : InferenceRule {
+class ExistentialExpansionRule(val ontology: Ontology) : InferenceRule {
+    override fun applyTo(conceptWrapper: ConceptWrapper): Boolean {
+        val assigned = conceptWrapper.concepts[conceptWrapper.targetConceptId] ?: mutableSetOf()
 
-    override fun applyTo(conceptWrapper: ConceptWrapper): Result {
-        val restrictionFillers = conceptWrapper.concepts.filterIsInstance<ExistentialRoleRestriction>()
-            .map { it.role() }
-            .toSet()
+        val targetSuccessorSize = conceptWrapper.successors[conceptWrapper.targetConceptId]?.size ?: 0
 
-        return Result(determineStatus(restrictionFillers), conceptWrapper.concepts, restrictionFillers)
-    }
+        val roleRestriction = assigned.filterIsInstance<ExistentialRoleRestriction>()
 
-    private fun determineStatus(restrictionFillers: Set<Role>): RuleStatus {
-        val status = if (restrictionFillers.isEmpty()) RuleStatus.NOT_APPLIED else RuleStatus.APPLIED
-        return status
+        val successorID = UUID.randomUUID()
+        roleRestriction.forEach { concept ->
+            if (concept in assigned) {
+                conceptWrapper.successors[conceptWrapper.targetConceptId]?.put(concept.role(), concept)
+            } else {
+                conceptWrapper.successors.getOrPut(successorID, ::mutableMapOf)[concept.role()] = concept.filler()
+            }
+        }
+
+        return (conceptWrapper.successors[conceptWrapper.targetConceptId]?.size ?: 0) > targetSuccessorSize ||
+                (conceptWrapper.successors[successorID]?.size ?: 0) > 0
     }
 }

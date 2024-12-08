@@ -1,32 +1,45 @@
 package org.kr.assignment.rules
 
-import nl.vu.kai.dl4python.datatypes.Concept
-import nl.vu.kai.dl4python.datatypes.ConceptName
-import nl.vu.kai.dl4python.datatypes.GeneralConceptInclusion
-import nl.vu.kai.dl4python.datatypes.TBox
+import nl.vu.kai.dl4python.datatypes.*
 
 /**
  * Equivalent to ⊑-rule: If d has C assigned and C ⊑ D ∈ T , then also assign D to d.
  */
 class SubsumptionPropagationRule(val tBox: TBox, val allConceptsOnOntology: Set<Concept>) : InferenceRule {
-    /**
-     * It adds subsumtions to set of concepts if applicable
-     *
-     * @param tBox: ontology's terminology box.
-     * @param [conceptWrapper]
-     */
-    override fun applyTo(conceptWrapper: ConceptWrapper): Result {
-        val subclassesOfConcepts = tBox.axioms.asSequence().filterIsInstance<GeneralConceptInclusion>()
-            .filter { it.lhs() in conceptWrapper.concepts && it.lhs() in allConceptsOnOntology }
+    private val conceptInclusionAxioms: Sequence<GeneralConceptInclusion> =
+        (tBox.axioms.filterIsInstance<GeneralConceptInclusion>() +
+                convertEquivalentAxiomsToGeneralConceptInclusion(tBox.axioms.filterIsInstance<EquivalenceAxiom>())
+                ).asSequence()
+
+    override fun applyTo(conceptWrapper: ConceptWrapper): Boolean {
+        val assigned = conceptWrapper.concepts[conceptWrapper.targetConceptId] ?: mutableSetOf()
+
+        val subclassesOfConcepts = conceptInclusionAxioms.filter { it.lhs() in assigned }
             .map { it.rhs() }
-            .filterIsInstance<ConceptName>()
+            .filter { it !in assigned }
             .toSet()
 
-        val newConcepts = conceptWrapper.concepts + subclassesOfConcepts
+        val newConcepts = subclassesOfConcepts.map {
+            when (it) {
+                is ConceptName -> setOf(it)
+                is ConceptConjunction -> it.conjuncts.toSet()
+                else -> emptySet()
+            }
+        }.flatten().filter { it !in assigned }
 
-        val status = if (newConcepts != conceptWrapper.concepts) RuleStatus.APPLIED else RuleStatus.NOT_APPLIED
+        conceptWrapper.concepts[conceptWrapper.targetConceptId]?.addAll(newConcepts)
 
-        return Result(status, conceptWrapper.concepts + subclassesOfConcepts, conceptWrapper.successors)
+
+        return newConcepts.isNotEmpty()
     }
 
+    private fun convertEquivalentAxiomsToGeneralConceptInclusion(
+        axioms: List<EquivalenceAxiom>
+    ) = tBox.axioms.filterIsInstance<EquivalenceAxiom>()
+        .map {
+            setOf(
+                GeneralConceptInclusion(it.concepts.first(), it.concepts.last()),
+                GeneralConceptInclusion(it.concepts.last(), it.concepts.first())
+            )
+        }.flatten()
 }
