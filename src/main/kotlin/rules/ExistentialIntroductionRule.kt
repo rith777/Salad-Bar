@@ -12,7 +12,7 @@ class ExistentialIntroductionRule : InferenceRule {
         val assigned = conceptWrapper.concepts[conceptWrapper.targetConceptId] ?: mutableSetOf()
 
         val newConcepts: Set<Concept> = conceptWrapper.successors[conceptWrapper.targetConceptId]
-            ?.filterValues { it is ConceptName && it in assigned }
+            ?.filterValues { it !in assigned }
             ?.map { (role, concept) -> ELFactory.getExistentialRoleRestriction(role, concept) }
             ?.toSet() ?: mutableSetOf()
 

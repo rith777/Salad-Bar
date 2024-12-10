@@ -1,8 +1,5 @@
 package org.kr.assignment
 
-import com.fasterxml.jackson.dataformat.csv.CsvMapper
-import com.fasterxml.jackson.dataformat.csv.CsvParser
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import nl.vu.kai.dl4python.datatypes.ConceptName
 import nl.vu.kai.dl4python.datatypes.Ontology
 import nl.vu.kai.dl4python.owlapi.OWLParser
@@ -33,12 +30,6 @@ data class ExperimentResult(
     val hermitCounter: Int,
     val hermitELapsedTimeInMilliseconds: Long,
 )
-
-val csvMapper = CsvMapper().apply {
-    registerModule(KotlinModule())
-    enable(CsvParser.Feature.TRIM_SPACES)
-    enable(CsvParser.Feature.SKIP_EMPTY_LINES)
-}
 
 val worker: ExecutorService = Executors.newFixedThreadPool(30)
 
