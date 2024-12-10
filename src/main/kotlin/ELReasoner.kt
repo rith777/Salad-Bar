@@ -1,6 +1,10 @@
 package org.kr.assignment
 
-import nl.vu.kai.dl4python.datatypes.*
+import nl.vu.kai.dl4python.ELFactory
+import nl.vu.kai.dl4python.datatypes.Concept
+import nl.vu.kai.dl4python.datatypes.ConceptConjunction
+import nl.vu.kai.dl4python.datatypes.ConceptName
+import nl.vu.kai.dl4python.datatypes.Ontology
 import org.kr.assignment.rules.*
 
 
@@ -26,7 +30,6 @@ class ELReasoner(
         changed or res
     }
 
-
     fun computeSubsumersOf(concept: Concept): Set<Concept> {
         if (concept !in ontology.conceptNames) {
             throw InvalidConceptException(concept)
@@ -42,16 +45,19 @@ class ELReasoner(
             .flatten()
             .filterIsInstance<ConceptName>()
 
-        return (subsumers.filter { it !is ConceptConjunction && it !is ConceptDisjunction } + conjunctions).toSet()
+
+
+        return (subsumers.filter { it is ConceptName || it == ELFactory.getTop() } +
+                conjunctions).toSet()
     }
 
     private fun initializeInferenceRules() = listOf(
         TopClassAssignmentInferenceRule(),
-        ConjunctionCompositionRule(ontology.subConcepts()),
+        ConjunctionCompositionRule(ontology.subConcepts),
         ConjunctionDecompositionRule(ontology.subConcepts),
         ExistentialExpansionRule(ontology),
         ExistentialIntroductionRule(),
-        SubsumptionPropagationRule(ontology.tbox(), ontology.subConcepts)
+        SubsumptionPropagationRule(ontology)
     )
 }
 
