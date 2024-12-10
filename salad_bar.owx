@@ -362,13 +362,6 @@
         <Class IRI="#Caeser_Salad"/>
         <ObjectSomeValuesFrom>
             <ObjectProperty IRI="#hasTopping"/>
-            <Class IRI="#Chicken"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Caeser_Salad"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#hasTopping"/>
             <Class IRI="#Croutons"/>
         </ObjectSomeValuesFrom>
     </SubClassOf>
@@ -390,14 +383,11 @@
         <Class IRI="#Caeser_Salad"/>
         <ObjectSomeValuesFrom>
             <ObjectProperty IRI="#hasTopping"/>
-            <Class IRI="#Salmon"/>
-        </ObjectSomeValuesFrom>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="#Caeser_Salad"/>
-        <ObjectSomeValuesFrom>
-            <ObjectProperty IRI="#hasTopping"/>
-            <Class IRI="#Shrimp"/>
+            <ObjectUnionOf>
+                <Class IRI="#Chicken"/>
+                <Class IRI="#Salmon"/>
+                <Class IRI="#Shrimp"/>
+            </ObjectUnionOf>
         </ObjectSomeValuesFrom>
     </SubClassOf>
     <SubClassOf>
