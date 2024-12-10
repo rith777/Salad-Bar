@@ -5,41 +5,75 @@ import nl.vu.kai.dl4python.datatypes.*
 /**
  * Equivalent to ⊑-rule: If d has C assigned and C ⊑ D ∈ T , then also assign D to d.
  */
-class SubsumptionPropagationRule(val tBox: TBox, val allConceptsOnOntology: Set<Concept>) : InferenceRule {
-    private val conceptInclusionAxioms: Sequence<GeneralConceptInclusion> =
-        (tBox.axioms.filterIsInstance<GeneralConceptInclusion>() +
-                convertEquivalentAxiomsToGeneralConceptInclusion(tBox.axioms.filterIsInstance<EquivalenceAxiom>())
-                ).asSequence()
+class SubsumptionPropagationRule(val ontology: Ontology) : InferenceRule {
+    private val subsumptions = preprocess()
 
     override fun applyTo(conceptWrapper: ConceptWrapper): Boolean {
-        val assigned = conceptWrapper.concepts[conceptWrapper.targetConceptId] ?: mutableSetOf()
+        val assigned: Set<Concept> = conceptWrapper.concepts[conceptWrapper.targetConceptId] ?: emptySet()
 
-        val subclassesOfConcepts = conceptInclusionAxioms.filter { it.lhs() in assigned }
-            .map { it.rhs() }
-            .filter { it !in assigned }
-            .toSet()
-
-        val newConcepts = subclassesOfConcepts.map {
-            when (it) {
-                is ConceptName -> setOf(it)
-                is ConceptConjunction -> it.conjuncts.toSet()
-                else -> emptySet()
-            }
-        }.flatten().filter { it !in assigned }
+        val newConcepts = newConcepts(assigned)
 
         conceptWrapper.concepts[conceptWrapper.targetConceptId]?.addAll(newConcepts)
-
 
         return newConcepts.isNotEmpty()
     }
 
-    private fun convertEquivalentAxiomsToGeneralConceptInclusion(
-        axioms: List<EquivalenceAxiom>
-    ) = tBox.axioms.filterIsInstance<EquivalenceAxiom>()
+    private fun newConcepts(assigned: Set<Concept>): List<Concept> {
+        val relatedSubsumtions: Set<Concept> = assigned.mapNotNull { concept -> subsumptions[concept] }
+            .flatten()
+            .toSet()
+
+        val generalConceptInclusionSubsumptions = relatedSubsumtions.filterIsInstance<GeneralConceptInclusion>()
+            .filter { it.lhs() in assigned && it.rhs() !in assigned }
+            .map { it.rhs() }
+
+        val conjunctionSubsumptions = relatedSubsumtions.filterIsInstance<ConceptConjunction>()
+            .map { it.conjuncts }
+            .flatten()
+            .filterNot { it in assigned }
+
+        return (generalConceptInclusionSubsumptions + conjunctionSubsumptions)
+    }
+
+    private fun allGeneralInclusionAxioms(): Sequence<GeneralConceptInclusion> {
+        val equivalenceAsGeneralConceptInclusion = ontology.tbox().axioms.filterIsInstance<EquivalenceAxiom>()
+            .asGeneralInclusion()
+
+        val generalConceptInclusions = ontology.tbox().axioms.filterIsInstance<GeneralConceptInclusion>()
+
+        return (generalConceptInclusions + equivalenceAsGeneralConceptInclusion)
+            .asSequence()
+    }
+
+    private fun preprocess(): Map<Concept, Set<Concept>> {
+        val classHierarchy: Map<Concept, List<Concept>> = buildClassHierarchy()
+
+        val transitiveClosure = ontology.conceptNames.associateWith { concept ->
+            ((classHierarchy[concept] ?: emptySet()) + concept)
+        }
+
+        return classHierarchy.mapValues { (_, reachableClasses) ->
+            transitiveClosure.keys.fold(reachableClasses) { acc, currentConcept ->
+                if (reachableClasses.contains(currentConcept)) {
+                    acc + (transitiveClosure[currentConcept] ?: emptySet())
+                } else {
+                    acc
+                }
+            }
+        }.map { (key, values) -> key to values.toSet() }.toMap()
+    }
+
+    private fun buildClassHierarchy(): Map<Concept, List<Concept>> = allGeneralInclusionAxioms()
+        .filterIsInstance<GeneralConceptInclusion>()
+        .groupBy { it.lhs() } as Map<Concept, List<Concept>>
+
+}
+
+private fun Collection<EquivalenceAxiom>.asGeneralInclusion(): List<GeneralConceptInclusion> =
+    this.filterIsInstance<EquivalenceAxiom>()
         .map {
             setOf(
                 GeneralConceptInclusion(it.concepts.first(), it.concepts.last()),
                 GeneralConceptInclusion(it.concepts.last(), it.concepts.first())
             )
         }.flatten()
-}
