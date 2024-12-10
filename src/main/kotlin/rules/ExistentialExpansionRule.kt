@@ -25,7 +25,15 @@ class ExistentialExpansionRule(val ontology: Ontology) : InferenceRule {
             }
         }
 
-        return (conceptWrapper.successors[conceptWrapper.targetConceptId]?.size ?: 0) > targetSuccessorSize ||
-                (conceptWrapper.successors[successorID]?.size ?: 0) > 0
+        return hasChanged(conceptWrapper, targetSuccessorSize, successorID)
     }
+
+    private fun hasChanged(
+        conceptWrapper: ConceptWrapper,
+        targetSuccessorSize: Int,
+        successorID: UUID
+    ) = (conceptWrapper.successors[conceptWrapper.targetConceptId]?.size ?: 0) > targetSuccessorSize ||
+            (conceptWrapper.successors[successorID]?.size ?: 0) > 0
+
+
 }
