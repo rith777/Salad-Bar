@@ -1,47 +1,69 @@
 package org.kr.assignment
 
+import nl.vu.kai.dl4python.ELFactory
 import nl.vu.kai.dl4python.datatypes.Concept
+import nl.vu.kai.dl4python.datatypes.ConceptConjunction
 import nl.vu.kai.dl4python.datatypes.ConceptName
 import nl.vu.kai.dl4python.datatypes.Ontology
-import org.kr.assignment.rules.ConceptWrapper
-import org.kr.assignment.rules.InferenceRule
-import org.kr.assignment.rules.Result
-import org.kr.assignment.rules.RuleStatus
+import org.kr.assignment.rules.*
 
 
-class ELReasoner(private val inferenceRules: List<InferenceRule>) {
+class ELReasoner(
+    private val ontology: Ontology = Ontology(),
+) {
 
-    private fun applyRules(concepts: Set<Concept>): Set<Concept> {
-        return applyRules(Result(RuleStatus.APPLIED, concepts))
-    }
+    private val inferenceRules: List<InferenceRule> by lazy { initializeInferenceRules() }
 
-    private fun applyRules(previousResult: Result): Set<Concept> {
-        if (previousResult.status == RuleStatus.NOT_APPLIED)
-            return previousResult.interpretation
-
-        val result = inferenceRules.fold(previousResult.copy(status = RuleStatus.NOT_APPLIED)) { acc, inferenceRule ->
-            val result = inferenceRule.applyTo(ConceptWrapper(acc.interpretation, acc.successors))
-            val status = if (acc.status == RuleStatus.APPLIED) acc.status else result.status
-
-            Result(
-                status = status,
-                interpretation = result.interpretation + acc.interpretation,
-                successors = result.successors + acc.successors
-            )
+    private fun computeSubsumers(conceptWrapper: ConceptWrapper): Set<Concept> {
+        var changed = true
+        while (changed) {
+            changed = applyRules(conceptWrapper)
         }
 
-        return applyRules(result)
+        return conceptWrapper.concepts[conceptWrapper.targetConceptId] ?: emptySet()
     }
 
-    fun computeSubsumers(subsumer: Concept, ontology: Ontology): Set<Concept> {
-        if (subsumer !in ontology.conceptNames) {
-            throw InvalidConceptException("There is no concept with name $subsumer on given ontology.")
+    private fun applyRules(
+        conceptWrapper: ConceptWrapper
+    ): Boolean = inferenceRules.fold(false) { changed, rule ->
+        val res = rule.applyTo(conceptWrapper)
+        changed or res
+    }
+
+    fun computeSubsumersOf(concept: Concept): Set<Concept> {
+        if (concept !in ontology.conceptNames) {
+            throw InvalidConceptException(concept)
         }
 
-        return applyRules(Result(RuleStatus.APPLIED, setOf(subsumer)))
+        return computeSubsumers(ConceptWrapper.initializeWith(concept))
+            .let(::cleanUpSubsumers)
     }
+
+    private fun cleanUpSubsumers(subsumers: Set<Concept>): Set<Concept> {
+        val conjunctions = subsumers.filterIsInstance<ConceptConjunction>()
+            .map { it.conjuncts }
+            .flatten()
+            .filterIsInstance<ConceptName>()
+
+
+
+        return (subsumers.filter { it is ConceptName || it == ELFactory.getTop() } +
+                conjunctions).toSet()
+    }
+
+    private fun initializeInferenceRules() = listOf(
+        TopClassAssignmentInferenceRule(),
+        ConjunctionCompositionRule(ontology.subConcepts),
+        ConjunctionDecompositionRule(ontology.subConcepts),
+        ExistentialExpansionRule(ontology),
+        ExistentialIntroductionRule(),
+        SubsumptionPropagationRule(ontology)
+    )
 }
 
 private fun String.asConceptName() = ConceptName(this)
 
-class InvalidConceptException(message: String) : Exception(message)
+class InvalidConceptException(concept: Concept) : Exception(
+    "Concept $concept does not exist on given ontology. " +
+            "Please, enter a valid concept and try again."
+)

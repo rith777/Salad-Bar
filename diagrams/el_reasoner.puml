@@ -1,0 +1,51 @@
+@startuml
+skinparam monochrome true
+!pragma layout smetana
+scale 250 height
+
+'https://plantuml.com/class-diagram
+interface        InferenceRule {
++ applyTo(): Boolean
+}
+
+class TopClassAssignmentRule {
++ applyTo(): Boolean
+}
+
+class ConjunctionDecompositionRule {
++ applyTo(): Boolean
+}
+
+class ConjunctionCompositionRule {
++ applyTo(): Boolean
+}
+
+class ExistentialExpansionRule {
++ applyTo(): Boolean
+}
+
+class ExistentialIntroductionRule {
++ applyTo(): Boolean
+}
+
+class SubsumptionPropagationRule {
++ applyTo(): Boolean
+}
+
+class ElReasoner {
+   ontology: Ontology
+   inferenceRule: List<InferenceRule>
++ compute(): Set<Concept>
+}
+
+InferenceRule <|-----r-------- TopClassAssignmentRule: "      "
+InferenceRule <|-l- ConjunctionDecompositionRule: "      "
+InferenceRule <|-- ConjunctionCompositionRule
+InferenceRule <|-- ExistentialExpansionRule
+InferenceRule <|-- ExistentialIntroductionRule
+InferenceRule <|-- SubsumptionPropagationRule
+
+
+ElReasoner *--  InferenceRule
+
+@enduml

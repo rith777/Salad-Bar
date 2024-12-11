@@ -6,7 +6,7 @@ import nl.vu.kai.dl4python.datatypes.ConceptConjunction
 /**
  * Equivalent to ⊓-rule 1:  If d has C ⊓ D assigned, assign also C and D to d
  */
-class ConjunctionDecompositionRule : InferenceRule {
+class ConjunctionDecompositionRule(private val allConceptsOnOntology: Set<Concept>) : InferenceRule {
 
     /**
      * Includes all conjunctions related each [Concept] included in the [conceptWrapper] to the [conceptWrapper] itself.
@@ -19,12 +19,17 @@ class ConjunctionDecompositionRule : InferenceRule {
      *         conjunctions. A conjunction is considered valid when it exists within the set of
      *         [allConceptsWithinOntology]
      */
-    override fun applyTo(conceptWrapper: ConceptWrapper): Result {
-        val conjuncts: List<Concept> = conceptWrapper.concepts.filterIsInstance<ConceptConjunction>()
-            .flatMap { it.conjuncts }
+    override fun applyTo(conceptWrapper: ConceptWrapper): Boolean {
+        val conjunctions = conceptWrapper.concepts[conceptWrapper.targetConceptId]
+            ?.filterIsInstance<ConceptConjunction>()
+            ?.flatMap { it.conjuncts }
+            ?.toSet()
 
-        return if (conjuncts.isNotEmpty()) {
-            Result(RuleStatus.APPLIED, (conceptWrapper.concepts + conjuncts))
-        } else Result(RuleStatus.NOT_APPLIED, conceptWrapper.concepts)
+        val concepts = conceptWrapper.concepts[conceptWrapper.targetConceptId] ?: mutableSetOf()
+        val newItems: List<Concept> = conjunctions?.filter { it !in concepts } ?: emptyList()
+
+        conceptWrapper.concepts[conceptWrapper.targetConceptId]?.addAll(newItems)
+
+        return newItems.isNotEmpty()
     }
 }
