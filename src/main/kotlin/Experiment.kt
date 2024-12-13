@@ -43,6 +43,7 @@ fun main() {
     val results: List<ExperimentResult> = tasks?.map { it.get() }?.flatten() ?: emptyList()
 
     println("storing results")
+    FileOutputStream("experiment_results.csv").apply { writeCsv(results) }
 
     worker.shutdown()
     println("finished")
@@ -58,7 +59,6 @@ fun processOntologyFile(file: File): List<ExperimentResult> {
         computeSubsumers(concept, ontology, file.name)
     }
 
-    FileOutputStream("${file.name}.csv").apply { writeCsv(results) }
 
     println("finished processing file ${file.name}")
     return results
@@ -89,30 +89,25 @@ fun computeSubsumers(
 ): ExperimentResult {
     println("computing susumer for classs $concept")
     val elSubsumers = measureTimedValue {
-        worker.submit(Callable { ELReasoner(ontology).computeSubsumersOf(concept).size })
+        ELReasoner(ontology).computeSubsumersOf(concept).size
     }
 
     val elkSubsumers = measureTimedValue {
-        worker.submit(Callable {
-            DLReasoners.getELKReasoner().apply { setOntology(ontology) }.getSubsumers(concept).size
-        })
-
+        DLReasoners.getELKReasoner().apply { setOntology(ontology) }.getSubsumers(concept).size
     }
 
     val hermitSubsumers = measureTimedValue {
-        worker.submit(Callable {
-            DLReasoners.getHermiTReasoner().apply { setOntology(ontology) }.getSubsumers(concept).size
-        })
+        DLReasoners.getHermiTReasoner().apply { setOntology(ontology) }.getSubsumers(concept).size
     }
 
     return ExperimentResult(
         fileName,
         concept,
-        elSubsumers.value.get(),
+        elSubsumers.value,
         elSubsumers.duration.inWholeMilliseconds,
-        elkSubsumers.value.get(),
+        elkSubsumers.value,
         elkSubsumers.duration.inWholeMilliseconds,
-        hermitSubsumers.value.get(),
+        hermitSubsumers.value,
         hermitSubsumers.duration.inWholeMilliseconds,
     )
 }

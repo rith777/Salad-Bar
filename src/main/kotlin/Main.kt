@@ -14,6 +14,7 @@ fun main() {
 
     val ontology = owlParser.parseFile(file!!)
 
+    println("Total concepts ${ontology.conceptNames.size}")
     DLHelpers.convert2binaryConjunctions(ontology)
 
     ontology.conceptNames.forEach { concept ->
